@@ -10,6 +10,9 @@ test-coverage:
 lint:
 	poetry run flake8 page_loader
 
+page-loader:
+	poetry run page_loader
+
 selfcheck:
 	poetry check
 
