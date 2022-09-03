@@ -13,3 +13,6 @@ coverage.xml
 
 # Visual Studio Code Plugin folder
 .vscode
+
+# PyTest Cache folder
+.pytest_cache

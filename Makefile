@@ -20,3 +20,6 @@ check: selfcheck test lint
 
 build: check
 	poetry build
+
+package-install:
+	pip install --user dist/*.whl

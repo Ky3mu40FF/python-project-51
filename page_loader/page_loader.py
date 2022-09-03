@@ -1,5 +1,6 @@
 """page_loader module."""
 
+from page_loader.download_handler import get_page_html_content
 from page_loader.file_handler import save_to_file
 
 
@@ -13,5 +14,5 @@ def download(url: str, output_path: str) -> str:
     Returns:
         (str): Full path to downloaded web page.
     """
-    full_path = save_to_file('', output_path, url)
-    return 'URL: {0}\nOutput Path: {1}\nResult: {2}'.format(url, output_path, full_path)
+    page_content = get_page_html_content(url)
+    return save_to_file(page_content, output_path, url)

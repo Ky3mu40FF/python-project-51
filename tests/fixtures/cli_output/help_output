@@ -1,0 +1,12 @@
+usage: page_loader [-h] [-o OUTPUT] page_url
+
+Downloads web page with all content.
+
+positional arguments:
+  page_url
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        Path to save downloaded page. Default - current
+                        working directory.

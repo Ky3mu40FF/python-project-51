@@ -26,3 +26,4 @@ This package allows you to download web pages with all content.
 
 # Asciinema records
 ## (STEP-1) Downloading page into html file:
+[![asciicast](https://asciinema.org/a/KIwihECZef65WbDywv1dyezhB.svg)](https://asciinema.org/a/KIwihECZef65WbDywv1dyezhB)
