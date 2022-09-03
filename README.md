@@ -5,7 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/444837cb45e2995a96a5/maintainability)](https://codeclimate.com/github/Ky3mu40FF/python-project-51/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/444837cb45e2995a96a5/test_coverage)](https://codeclimate.com/github/Ky3mu40FF/python-project-51/test_coverage)
 ### Internal tests and linter status:
-![Tests and Linter Status](https://github.com/Ky3mu40FF/python-project-51/workflows/code-check/badge.svg)
+[![Tests and Linter Status](https://github.com/Ky3mu40FF/python-project-51/workflows/code-check/badge.svg)](https://github.com/Ky3mu40FF/python-project-51/actions)
 
 # Description
 This package allows you to download web pages with all content.
