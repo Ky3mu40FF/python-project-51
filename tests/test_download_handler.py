@@ -1,24 +1,16 @@
-"""tests for download_handler package."""
+"""tests for download_handler module."""
 import os
 import requests_mock
 
-from page_loader.download_handler import get_page_html_content
+from page_loader.download_handler import fetch_resource
 
 
-def read(file_path: str):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        result = f.read()
-    return result
-
-
-def test_get_web_page(expected_html_content):
+def test_fetch_resource_html(expected_html_downloaded):
     test_url = 'https://ru.hexlet.io/courses'
     with requests_mock.Mocker() as m:
         m.get(
             test_url,
-            status_code = 200,
-            text=expected_html_content,
+            content=expected_html_downloaded,
         )
-        actual_html_content = get_page_html_content(test_url)
-        assert expected_html_content == actual_html_content
-
+        actual_html_downloaded = fetch_resource(test_url)
+        assert expected_html_downloaded == actual_html_downloaded

@@ -1,4 +1,4 @@
-"""tests for file_handler package."""
+"""tests for file_handler module."""
 import os
 import tempfile
 

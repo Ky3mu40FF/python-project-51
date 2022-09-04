@@ -48,6 +48,21 @@ toml = ["toml"]
 yaml = ["pyyaml"]
 
 [[package]]
+name = "beautifulsoup4"
+version = "4.11.1"
+description = "Screen-scraping library"
+category = "main"
+optional = false
+python-versions = ">=3.6.0"
+
+[package.dependencies]
+soupsieve = ">1.2"
+
+[package.extras]
+html5lib = ["html5lib"]
+lxml = ["lxml"]
+
+[[package]]
 name = "certifi"
 version = "2022.6.15"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -562,6 +577,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "soupsieve"
+version = "2.3.2.post1"
+description = "A modern CSS selector implementation for Beautiful Soup."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "stevedore"
 version = "4.0.0"
 description = "Manage dynamic plugins for Python applications"
@@ -633,7 +656,7 @@ typing_extensions = ">=3.6,<5.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "00cf4a55e8a45727f99fa8bddf62522702ffe710154ef9264cef18339b4a8990"
+content-hash = "7365837ece9b34dd25af49dfe725289b508ebda2f1b8d5d0e9f065a190f57a46"
 
 [metadata.files]
 astor = [
@@ -646,6 +669,7 @@ bandit = [
     {file = "bandit-1.7.4-py3-none-any.whl", hash = "sha256:412d3f259dab4077d0e7f0c11f50f650cc7d10db905d98f6520a95a18049658a"},
     {file = "bandit-1.7.4.tar.gz", hash = "sha256:2d63a8c573417bae338962d4b9b06fbc6080f74ecd955a092849e1e65c717bd2"},
 ]
+beautifulsoup4 = []
 certifi = []
 charset-normalizer = []
 colorama = []
@@ -802,6 +826,7 @@ snowballstemmer = [
     {file = "snowballstemmer-2.2.0-py2.py3-none-any.whl", hash = "sha256:c8e1716e83cc398ae16824e5572ae04e0d9fc2c6b985fb0f900f5f0c96ecba1a"},
     {file = "snowballstemmer-2.2.0.tar.gz", hash = "sha256:09b16deb8547d3412ad7b590689584cd0fe25ec8db3be37788be3810cbf19cb1"},
 ]
+soupsieve = []
 stevedore = []
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},

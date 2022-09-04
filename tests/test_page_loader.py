@@ -1,4 +1,4 @@
-"""tests for page_loader package."""
+"""tests for page_loader module."""
 import os
 import requests_mock
 import tempfile

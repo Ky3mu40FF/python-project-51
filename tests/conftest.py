@@ -1,20 +1,26 @@
 import os
 import pytest
 
+from tests.helpers.utils import (
+    get_fixture_path,
+    read,
+)
 
-def get_fixture_path(name: str) -> str:
-    return os.path.join('tests/fixtures', name)
-
-
-def read(file_path: str):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        result = f.read()
-    return result
-
-fixture_page_file_name = 'expected_ru-hexlet-io-courses.html'
-fixture_page_file_path = get_fixture_path(fixture_page_file_name)
+FIXTURE_HTML_PAGE_DOWNLOADED_FILE_NAME = 'ru-hexlet-io-courses_after.html'
+FIXTURE_HTML_PAGE_PROCESSED_FILE_NAME = 'ru-hexlet-io-courses_before.html'
 
 
 @pytest.fixture()
-def expected_html_content():
-    return read(fixture_page_file_path)
+def expected_html_downloaded():
+    return read(
+        get_fixture_path(FIXTURE_HTML_PAGE_DOWNLOADED_FILE_NAME),
+        'rb',
+    )
+
+
+@pytest.fixture()
+def expected_html_processed():
+    return read(
+        get_fixture_path(FIXTURE_HTML_PAGE_PROCESSED_FILE_NAME),
+        'rb',
+    )

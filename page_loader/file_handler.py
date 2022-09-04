@@ -1,76 +1,57 @@
 """file_handler module."""
 import os
-import re
-from typing import Optional
-from urllib.parse import urlparse
+from typing import Optional, Union
+
+
+def is_directory_exists(dir_path: str) -> bool:
+    """Check if directory exists."""
+    return os.path.exists(dir_path)
 
 
 def save_to_file(
-    content_to_save: str,
+    content_to_save: Union[str, bytes],
     output_path: str,
-    url: str,
+    file_name: str,
 ) -> Optional[str]:
     """Save downloaded HTML content to file.
 
     Args:
         content_to_save (str): HTML content to save in file.
         output_path (str): Path to directory to save file.
-        url (str): URL of web page to download.
+        file_name (str): File name to save.
 
     Returns:
         (Optional[str]): Full path to saved file. None in case of error.
     """
-    converted_filename = convert_url_to_file_name(url)
     full_path = os.path.join(
         output_path,
-        '.'.join((converted_filename, 'html')),
+        file_name,
     )
+    open_file_mode = 'w' if type(content_to_save) == str else 'wb'
     try:
-        with open(full_path, 'w', encoding='utf-8') as file_to_save:
+        with open(full_path, open_file_mode) as file_to_save:
             file_to_save.write(content_to_save)
     except OSError:
-        return None
+        raise
     return full_path
 
 
-def convert_url_to_file_name(url: str) -> str:
-    """Convert URL to safe name for file.
-
+def create_assets_directory(output_path: str, directory_name: str) -> str:
+    """Create directory for assets.
+    
     Args:
-        url (str): URL of web page to download.
+        output_path (str):
+        directory_name (str):
 
     Returns:
-        (str): File name, converted from URL.
+        (str): Full path to new directory.
     """
-    url_parse_result = urlparse(url)
-    path_without_scheme = '{0}{1}'.format(
-        url_parse_result.netloc,
-        url_parse_result.path,
+    directory_full_path = os.path.join(
+        output_path,
+        directory_name,
     )
-    filename_without_extension = remove_extension(path_without_scheme)
-    return replace_separation_chars_to_dashes(filename_without_extension)
-
-
-def remove_extension(path_with_extension: str) -> str:
-    """Remove extension from URL.
-
-    Args:
-        path_with_extension (str): Path with extension.
-
-    Returns:
-        (str): Path without extension.
-    """
-    splitted_filename = os.path.splitext(path_with_extension)
-    return splitted_filename[0]
-
-
-def replace_separation_chars_to_dashes(filename: str) -> str:
-    """Replace separation characters from URL to dashes.
-
-    Args:
-        filename (str): File name needed to replace separation characters.
-
-    Returns:
-        (str): File name with replaced to dashes separation characters.
-    """
-    return re.sub('[^a-zA-Z0-9]', '-', filename)
+    try:
+        os.mkdir(directory_full_path)
+    except OSError:
+        raise
+    return directory_full_path

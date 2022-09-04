@@ -3,16 +3,10 @@ import pytest
 from unittest import mock
 
 from page_loader.scripts.page_loader import main
-
-
-def get_fixture_path(name: str) -> str:
-    return os.path.join('tests/fixtures/cli_output/', name)
-
-
-def read(file_path: str):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        result = f.read()
-    return result
+from tests.helpers.utils import (
+    get_fixture_path,
+    read,
+)
 
 
 @pytest.fixture
