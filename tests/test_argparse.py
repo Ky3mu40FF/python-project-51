@@ -11,13 +11,13 @@ from tests.helpers.utils import (
 
 @pytest.fixture
 def argparse_help_output_fixture():
-    fixture_path = get_fixture_path('help_output')
+    fixture_path = get_fixture_path('argparse_help_output')
     return read(fixture_path)
 
 
 @pytest.fixture
 def argparse_missing_page_url_arg_output_fixture():
-    fixture_path = get_fixture_path('missing_page_url_arg')
+    fixture_path = get_fixture_path('argparse_missing_page_url_arg')
     return read(fixture_path)
 
 

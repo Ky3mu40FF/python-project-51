@@ -19,6 +19,7 @@ def fetch_resource(url: str) -> bytes:
 
 
 def download_assets(output_path: str, assets: list) -> None:
+    """Download assets and save to files."""
     for asset in assets:
         asset_content = fetch_resource(asset.asset_url)
         save_to_file(

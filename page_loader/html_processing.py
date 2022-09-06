@@ -36,7 +36,6 @@ def prepare_html_and_assets(
 
     for asset in parsed_html.find_all('img'):
         asset_src = asset.get('src')
-
         if is_domains_equal(asset_src, page_url):
             asset_url = prepare_asset_url(asset_src, page_url)
             asset_file_name = generate_file_name_from_url(asset_url)
