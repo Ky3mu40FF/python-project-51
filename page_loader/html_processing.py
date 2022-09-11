@@ -1,13 +1,12 @@
 """html_editor module."""
-from bs4 import BeautifulSoup
-from collections import namedtuple
-from urllib.parse import urljoin, urlparse
 import os
-from typing import Set, Tuple
+from collections import namedtuple
+from typing import Tuple
 
+from bs4 import BeautifulSoup
 from page_loader.url_processing import (
-    is_domains_equal,
     generate_file_name_from_url,
+    is_domains_equal,
     prepare_asset_url,
 )
 
@@ -18,15 +17,17 @@ AssetInfo = namedtuple('AssetInfo', [
 
 
 def prepare_html_and_assets(
-        html_content: bytes,
-        page_url: str,
-        assets_directory_name: str,
-    ) -> Tuple[str, list]:
+    html_content: bytes,
+    page_url: str,
+    assets_directory_name: str,
+) -> Tuple[str, list]:
     """Prepare HTML content for using with local assets.
-    
+
     Args:
-        html_doc (bytes): Web page HTML content int text format.
-    
+        html_content (bytes): Web page HTML content int text format.
+        page_url (str): URL of downloading web page.
+        assets_directory_name (str): Name of directory to store assets.
+
     Returns:
         (Tuple[str, list]): Formatted HTML content and set of assets.
     """
@@ -39,24 +40,27 @@ def prepare_html_and_assets(
         if is_domains_equal(asset_src, page_url):
             asset_url = prepare_asset_url(asset_src, page_url)
             asset_file_name = generate_file_name_from_url(asset_url)
-            local_asset_path = os.path.join(
+            asset['src'] = os.path.join(
                 assets_directory_name,
                 asset_file_name,
             )
-            asset['src'] = local_asset_path
             assets.append(AssetInfo(
                 asset_url,
                 asset_file_name,
             ))
     return (
-        parsed_html.prettify(), 
+        parsed_html.prettify(),
         list(set(assets)),
     )
 
 
 def parse_html(html_content: bytes) -> BeautifulSoup:
-    """Parse HTML content."""
+    """Parse HTML content.
+
+    Args:
+        html_content (bytes):Unparsed HTML content.
+
+    Returns:
+        (BeautifulSoup): Parsed HTML content in BeautifulSoup format.
+    """
     return BeautifulSoup(html_content, 'html.parser')
-
-
-

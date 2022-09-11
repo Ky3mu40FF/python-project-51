@@ -1,8 +1,6 @@
 """download_handler module."""
 import requests
 from page_loader.file_handler import save_to_file
-from page_loader.html_processing import AssetInfo
-
 
 
 def fetch_resource(url: str) -> bytes:
@@ -19,7 +17,12 @@ def fetch_resource(url: str) -> bytes:
 
 
 def download_assets(output_path: str, assets: list) -> None:
-    """Download assets and save to files."""
+    """Download assets and save to files.
+
+    Args:
+        output_path (str): Path where to save downloaded assets.
+        assets (list): List of assets to download.
+    """
     for asset in assets:
         asset_content = fetch_resource(asset.asset_url)
         save_to_file(

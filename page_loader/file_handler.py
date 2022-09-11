@@ -4,7 +4,14 @@ from typing import Optional, Union
 
 
 def is_directory_exists(dir_path: str) -> bool:
-    """Check if directory exists."""
+    """Check if directory exists.
+
+    Args:
+        dir_path (str): Path to directory.
+
+    Returns:
+        (bool): True if directory exists.
+    """
     return os.path.exists(dir_path)
 
 
@@ -27,21 +34,21 @@ def save_to_file(
         output_path,
         file_name,
     )
-    open_file_mode = 'w' if type(content_to_save) == str else 'wb'
+    open_file_mode = 'w' if isinstance(content_to_save, str) else 'wb'
     try:
         with open(full_path, open_file_mode) as file_to_save:
             file_to_save.write(content_to_save)
     except OSError:
-        raise
+        return None
     return full_path
 
 
 def create_assets_directory(output_path: str, directory_name: str) -> str:
     """Create directory for assets.
-    
+
     Args:
-        output_path (str):
-        directory_name (str):
+        output_path (str): Path where to create directory for assets.
+        directory_name (str): Name of the directory for assets.
 
     Returns:
         (str): Full path to new directory.
@@ -53,5 +60,5 @@ def create_assets_directory(output_path: str, directory_name: str) -> str:
     try:
         os.mkdir(directory_full_path)
     except OSError:
-        raise
+        return None
     return directory_full_path

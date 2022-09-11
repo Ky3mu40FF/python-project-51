@@ -1,18 +1,13 @@
 """page_loader module."""
 from typing import Optional
 
-from page_loader.download_handler import (
-    fetch_resource,
-    download_assets,
-)
+from page_loader.download_handler import download_assets, fetch_resource
 from page_loader.file_handler import (
-    save_to_file,
-    is_directory_exists,
     create_assets_directory,
+    is_directory_exists,
+    save_to_file,
 )
-from page_loader.html_processing import (
-    prepare_html_and_assets,
-)
+from page_loader.html_processing import prepare_html_and_assets
 from page_loader.url_processing import (
     generate_assets_directory_name,
     generate_file_name_from_url,
@@ -30,7 +25,7 @@ def download(page_url: str, output_path: str) -> Optional[str]:
         (Optional[str]): Full path to downloaded web page.
     """
     if not is_directory_exists(output_path):
-        raise FileNotFoundError
+        return None
 
     page_content = fetch_resource(page_url)
 
@@ -57,6 +52,3 @@ def download(page_url: str, output_path: str) -> Optional[str]:
         output_path=output_path,
         file_name=generate_file_name_from_url(page_url),
     )
-
-
-
