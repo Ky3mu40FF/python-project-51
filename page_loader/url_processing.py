@@ -53,7 +53,7 @@ def generate_assets_directory_name(page_url: str) -> str:
         path_without_extension.strip('/'),
     )
     return '{0}{1}'.format(
-        re.sub(r'\W', '-', file_name),
+        re.sub(r'\W', '-', file_name).strip('-'),
         ASSETS_DIRECTORY_SUFFIX,
     )
 
@@ -74,7 +74,7 @@ def generate_file_name_from_url(resource_url: str) -> str:
         path_without_extension.strip('/'),
     )
     return '{0}{1}'.format(
-        re.sub(r'\W', '-', file_name),
+        re.sub(r'\W', '-', file_name).strip('-'),
         extension if extension else HTML_FILE_EXTENSION,
     )
 

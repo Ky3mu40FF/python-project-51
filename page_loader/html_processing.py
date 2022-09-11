@@ -15,6 +15,12 @@ AssetInfo = namedtuple('AssetInfo', [
     'asset_file_name',
 ])
 
+RESOURCE_TAG_WITH_LINKS = {
+    'img': 'src',
+    'link': 'href',
+    'script': 'src',
+}
+
 
 def prepare_html_and_assets(
     html_content: bytes,
@@ -35,12 +41,12 @@ def prepare_html_and_assets(
 
     assets = []
 
-    for asset in parsed_html.find_all('img'):
-        asset_src = asset.get('src')
+    for asset in parsed_html.find_all(RESOURCE_TAG_WITH_LINKS.keys()):
+        asset_src = asset.get(RESOURCE_TAG_WITH_LINKS[asset.name])
         if is_domains_equal(asset_src, page_url):
             asset_url = prepare_asset_url(asset_src, page_url)
             asset_file_name = generate_file_name_from_url(asset_url)
-            asset['src'] = os.path.join(
+            asset[RESOURCE_TAG_WITH_LINKS[asset.name]] = os.path.join(
                 assets_directory_name,
                 asset_file_name,
             )
