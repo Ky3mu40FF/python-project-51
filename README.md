@@ -29,3 +29,5 @@ This package allows you to download web pages with all content.
 [![asciicast](https://asciinema.org/a/KIwihECZef65WbDywv1dyezhB.svg)](https://asciinema.org/a/KIwihECZef65WbDywv1dyezhB)
 ## (STEP-3) Downloading page with local resources (images, style and scripts):
 [![asciicast](https://asciinema.org/a/6vV0nkD4nwwkgj8jBnyYiaKn5.svg)](https://asciinema.org/a/6vV0nkD4nwwkgj8jBnyYiaKn5)
+## (STEP-4) Added logging:
+[![asciicast](https://asciinema.org/a/EpspsajEtDgzt5mvhIyYXovED.svg)](https://asciinema.org/a/EpspsajEtDgzt5mvhIyYXovED)

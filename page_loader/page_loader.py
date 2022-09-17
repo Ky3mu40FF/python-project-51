@@ -8,10 +8,13 @@ from page_loader.file_handler import (
     save_to_file,
 )
 from page_loader.html_processing import prepare_html_and_assets
+from page_loader.logging import get_logger
 from page_loader.url_processing import (
     generate_assets_directory_name,
     generate_file_name_from_url,
 )
+
+logger = get_logger(__name__)
 
 
 def download(page_url: str, output_path: str) -> Optional[str]:
@@ -23,9 +26,17 @@ def download(page_url: str, output_path: str) -> Optional[str]:
 
     Returns:
         (Optional[str]): Full path to downloaded web page.
+
+    Raises:
+        FileNotFoundError: If output directory doesn't exists.
     """
     if not is_directory_exists(output_path):
-        return None
+        logger.warning("Output directory ({0}) doesn't exists.".format(
+            output_path,
+        ))
+        raise FileNotFoundError('Output directory not found: {0}'.format(
+            output_path,
+        ))
 
     page_content = fetch_resource(page_url)
 
