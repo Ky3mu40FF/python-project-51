@@ -42,7 +42,7 @@ def save_to_file(
         file_name,
     )
     open_file_mode = 'w' if isinstance(content_to_save, str) else 'wb'
-    logger.info('Saving file: {0}'.format(full_path))
+    logger.debug('Saving file {0}'.format(full_path))
     try:
         with open(full_path, open_file_mode) as file_to_save:
             file_to_save.write(content_to_save)
@@ -73,7 +73,7 @@ def create_assets_directory(output_path: str, directory_name: str) -> str:
         output_path,
         directory_name,
     )
-    logger.info('Creating assets directory: {0}'.format(directory_full_path))
+    logger.info('Creating assets directory {0}'.format(directory_full_path))
     try:
         os.mkdir(directory_full_path)
     except OSError as assets_mkdir_exception:

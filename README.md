@@ -33,3 +33,5 @@ This package allows you to download web pages with all content.
 [![asciicast](https://asciinema.org/a/EpspsajEtDgzt5mvhIyYXovED.svg)](https://asciinema.org/a/EpspsajEtDgzt5mvhIyYXovED)
 ## (STEP-5) Configured logging:
 [![asciicast](https://asciinema.org/a/sDkwJGpyhpSgEaEy3hEpQdOku.svg)](https://asciinema.org/a/sDkwJGpyhpSgEaEy3hEpQdOku)
+## (STEP-6) Progress bar implemented:
+[![asciicast](https://asciinema.org/a/ejBhVOukyxGisxiidLn43cEKH.svg)](https://asciinema.org/a/ejBhVOukyxGisxiidLn43cEKH)

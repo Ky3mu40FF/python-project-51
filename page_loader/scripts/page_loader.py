@@ -38,7 +38,7 @@ def main():
         )
     except (requests.exceptions.RequestException, OSError):
         sys.exit(1)
-    print('Page ({0}) successfully saved to {1}'.format(
+    print('Page {0} successfully saved to {1}'.format(
         args.page_url,
         page_output_path,
     ))
