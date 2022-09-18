@@ -3,7 +3,9 @@
 
 import argparse
 import os
+import sys
 
+import requests
 from page_loader.page_loader import download
 
 
@@ -29,9 +31,16 @@ def parse_args():
 def main():
     """page_loader entry point."""
     args = parse_args()
-    print(download(
+    try:
+        page_output_path = download(
+            args.page_url,
+            args.output,
+        )
+    except (requests.exceptions.RequestException, OSError):
+        sys.exit(1)
+    print('Page ({0}) successfully saved to {1}'.format(
         args.page_url,
-        args.output,
+        page_output_path,
     ))
 
 

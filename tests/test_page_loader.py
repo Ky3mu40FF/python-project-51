@@ -1,5 +1,7 @@
 """tests for page_loader module."""
 import os
+import pytest
+from requests import RequestException
 import requests_mock
 import tempfile
 
@@ -64,17 +66,53 @@ def test_download(
                 output_path=tmpdirname,
             )
 
-            actual_html_content = read(actual_full_path, 'rb')
-            actual_asset_image = read(expected_asset_image_full_path, 'rb')
-            actual_asset_style = read(expected_asset_style_full_path, 'rb')
-            actual_asset_script = read(expected_asset_script_full_path, 'rb')
-
             assert expected_html_file_full_path == actual_full_path
-            assert expected_html_processed == actual_html_content
-            assert os.path.isdir(expected_assets_directory_full_path)
-            assert os.path.isfile(expected_asset_image_full_path)
-            assert os.path.isfile(expected_asset_style_full_path)
-            assert os.path.isfile(expected_asset_script_full_path)
-            assert expected_asset_image == actual_asset_image
-            assert expected_asset_style == actual_asset_style
-            assert expected_asset_script == actual_asset_script
+            assert expected_html_processed == read(actual_full_path, 'rb')
+            assert expected_asset_image == read(expected_asset_image_full_path, 'rb')
+            assert expected_asset_style == read(expected_asset_style_full_path, 'rb')
+            assert expected_asset_script == read(expected_asset_script_full_path, 'rb')
+
+
+def test_output_directory_exists():
+    not_existing_dir = '/this/dir/not/exists'
+    with pytest.raises(FileNotFoundError) as exc_info:
+        download(
+            page_url=RESOURCE_URLS[HTML],
+            output_path=not_existing_dir,
+        )
+        assert "Output directory not found: {0}".format(not_existing_dir) in str(exc_info.value)
+
+
+def test_cant_create_assets_directory(expected_html_downloaded):
+    with requests_mock.Mocker() as m:
+        m.get(
+            url=RESOURCE_URLS[HTML],
+            content=expected_html_downloaded,
+        )
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            assets_directory_full_path = os.path.join(
+                tmpdirname,
+                EXPECTED_NAMES[ASSETS_DIRECTORY],
+            )
+            os.mkdir(assets_directory_full_path)
+            with pytest.raises(FileExistsError) as exc_info:
+                download(
+                    page_url=RESOURCE_URLS[HTML],
+                    output_path=tmpdirname,
+                )
+                assert "Can't create assets directory {0}".format(assets_directory_full_path)
+
+
+def test_cant_download_page():
+    with requests_mock.Mocker() as m:
+        m.get(
+            url=RESOURCE_URLS[HTML],
+            status_code=404,
+        )
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            with pytest.raises(RequestException) as exc_info:
+                download(
+                    page_url=RESOURCE_URLS[HTML],
+                    output_path=tmpdirname,
+                )
+                assert "Can't download resource at URL: {0}".format(RESOURCE_URLS[HTML])

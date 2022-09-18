@@ -16,3 +16,6 @@ coverage.xml
 
 # PyTest Cache folder
 .pytest_cache
+
+# log files
+*.log

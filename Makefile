@@ -23,3 +23,8 @@ build: check
 
 package-install:
 	pip install --user dist/*.whl
+
+package-uninstall:
+	pip uninstall hexlet-code
+
+build-and-reinstall: package-uninstall build package-install

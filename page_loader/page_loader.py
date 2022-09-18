@@ -31,7 +31,7 @@ def download(page_url: str, output_path: str) -> Optional[str]:
         FileNotFoundError: If output directory doesn't exists.
     """
     if not is_directory_exists(output_path):
-        logger.warning("Output directory ({0}) doesn't exists.".format(
+        logger.error("Output directory ({0}) doesn't exists.".format(
             output_path,
         ))
         raise FileNotFoundError('Output directory not found: {0}'.format(

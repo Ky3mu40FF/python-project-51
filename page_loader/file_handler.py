@@ -47,7 +47,10 @@ def save_to_file(
         with open(full_path, open_file_mode) as file_to_save:
             file_to_save.write(content_to_save)
     except OSError as write_file_exception:
-        logger.warning("Can't save file {0}".format(full_path))
+        logger.error("Can't save file {0}\n{1}".format(
+            full_path,
+            write_file_exception,
+        ))
         logger.debug(write_file_exception, exc_info=True)
         raise
     return full_path
@@ -74,8 +77,9 @@ def create_assets_directory(output_path: str, directory_name: str) -> str:
     try:
         os.mkdir(directory_full_path)
     except OSError as assets_mkdir_exception:
-        logger.warning("Can't create assets directory {0}".format(
+        logger.error("Can't create assets directory {0}\n{1}".format(
             directory_full_path,
+            assets_mkdir_exception,
         ))
         logger.debug(assets_mkdir_exception, exc_info=True)
         raise

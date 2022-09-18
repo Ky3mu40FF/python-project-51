@@ -22,7 +22,10 @@ def fetch_resource(url: str) -> bytes:
         response = requests.get(url)
         response.raise_for_status()
     except requests.exceptions.RequestException as req_exception:
-        logger.warning("Can't download resource at URL: {0}".format(url))
+        logger.error("Can't download resource at URL: {0}\n{1}".format(
+            url,
+            req_exception,
+        ))
         logger.debug(req_exception, exc_info=True)
         raise
     return response.content
