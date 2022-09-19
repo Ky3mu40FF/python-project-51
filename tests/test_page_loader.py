@@ -110,12 +110,37 @@ def test_cant_create_assets_directory(
         assert "Can't create assets directory {0}".format(assets_directory_full_path)
 
 
-def test_cant_download_page(tempdir, requests_mock):
+def test_resource_not_found(tempdir, requests_mock):
     requests_mock.get(
         url=RESOURCE_URLS[HTML],
         status_code=404,
     )
+    with pytest.raises(RequestException) as exc_info:
+        download(
+            page_url=RESOURCE_URLS[HTML],
+            output_path=tempdir,
+        )
+        assert "Can't download resource at URL: {0}".format(RESOURCE_URLS[HTML])
 
+
+def test_request_timeout(tempdir, requests_mock):
+    requests_mock.get(
+        url=RESOURCE_URLS[HTML],
+        status_code=408,
+    )
+    with pytest.raises(RequestException) as exc_info:
+        download(
+            page_url=RESOURCE_URLS[HTML],
+            output_path=tempdir,
+        )
+        assert "Can't download resource at URL: {0}".format(RESOURCE_URLS[HTML])
+
+
+def test_internal_server_error(tempdir, requests_mock):
+    requests_mock.get(
+        url=RESOURCE_URLS[HTML],
+        status_code=500,
+    )
     with pytest.raises(RequestException) as exc_info:
         download(
             page_url=RESOURCE_URLS[HTML],
