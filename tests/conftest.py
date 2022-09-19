@@ -3,7 +3,7 @@ import pytest
 
 from tests.fixture_files_extra_functions.fixture_file_read import (
     get_fixture_path,
-    read,
+    read_as_binary,
 )
 
 FIXTURE_HTML_PAGE_DOWNLOADED_FILE_NAME = 'ru-hexlet-io-courses_before.html'
@@ -15,39 +15,24 @@ FIXTURE_ASSET_SCRIPT_FILE_NAME = 'runtime.js'
 
 @pytest.fixture()
 def expected_html_downloaded():
-    return read(
-        get_fixture_path(FIXTURE_HTML_PAGE_DOWNLOADED_FILE_NAME),
-        'rb',
-    )
+    return read_as_binary(get_fixture_path(FIXTURE_HTML_PAGE_DOWNLOADED_FILE_NAME))
 
 
 @pytest.fixture()
 def expected_html_processed():
-    return read(
-        get_fixture_path(FIXTURE_HTML_PAGE_PROCESSED_FILE_NAME),
-        'rb',
-    )
+    return read_as_binary(get_fixture_path(FIXTURE_HTML_PAGE_PROCESSED_FILE_NAME))
 
 
 @pytest.fixture()
 def expected_asset_image():
-    return read(
-        get_fixture_path(FIXTURE_ASSET_IMAGE_FILE_NAME),
-        'rb',
-    )
+    return read_as_binary(get_fixture_path(FIXTURE_ASSET_IMAGE_FILE_NAME))
 
 
 @pytest.fixture()
 def expected_asset_style():
-    return read(
-        get_fixture_path(FIXTURE_ASSET_STYLE_FILE_NAME),
-        'rb',
-    )
+    return read_as_binary(get_fixture_path(FIXTURE_ASSET_STYLE_FILE_NAME))
 
 
 @pytest.fixture()
 def expected_asset_script():
-    return read(
-        get_fixture_path(FIXTURE_ASSET_SCRIPT_FILE_NAME),
-        'rb',
-    )
+    return read_as_binary(get_fixture_path(FIXTURE_ASSET_SCRIPT_FILE_NAME))

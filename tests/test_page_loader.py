@@ -6,7 +6,7 @@ import requests_mock
 import tempfile
 
 from page_loader.page_loader import download
-from tests.fixture_files_extra_functions.fixture_file_read import read
+from tests.fixture_files_extra_functions.fixture_file_read import read_as_binary
 
 HTML = 'html'
 IMG = 'img'
@@ -72,10 +72,10 @@ def test_download(
         )
 
         assert expected_html_file_full_path == actual_full_path
-        assert expected_html_processed == read(actual_full_path, 'rb')
-        assert expected_asset_image == read(expected_asset_image_full_path, 'rb')
-        assert expected_asset_style == read(expected_asset_style_full_path, 'rb')
-        assert expected_asset_script == read(expected_asset_script_full_path, 'rb')
+        assert expected_html_processed == read_as_binary(actual_full_path)
+        assert expected_asset_image == read_as_binary(expected_asset_image_full_path)
+        assert expected_asset_style == read_as_binary(expected_asset_style_full_path)
+        assert expected_asset_script == read_as_binary(expected_asset_script_full_path)
 
 
 def test_output_directory_exists():
