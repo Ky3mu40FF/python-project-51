@@ -30,7 +30,13 @@ EXPECTED_NAMES = {
 }
 
 
+@pytest.fixture
+def tempdir():
+    return tempfile.mkdtemp()
+
+
 def test_download(
+    tempdir,
     expected_html_downloaded,
     expected_html_processed,
     expected_asset_image,
@@ -54,23 +60,22 @@ def test_download(
             url=RESOURCE_URLS[SCRIPT],
             content=expected_asset_script,
         )
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            expected_html_file_full_path = os.path.join(tmpdirname, EXPECTED_NAMES[HTML])
-            expected_assets_directory_full_path = os.path.join(tmpdirname, EXPECTED_NAMES[ASSETS_DIRECTORY])
-            expected_asset_image_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[IMG])
-            expected_asset_style_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[STYLE])
-            expected_asset_script_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[SCRIPT])
-            
-            actual_full_path = download(
-                page_url=RESOURCE_URLS[HTML],
-                output_path=tmpdirname,
-            )
+        expected_html_file_full_path = os.path.join(tempdir, EXPECTED_NAMES[HTML])
+        expected_assets_directory_full_path = os.path.join(tempdir, EXPECTED_NAMES[ASSETS_DIRECTORY])
+        expected_asset_image_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[IMG])
+        expected_asset_style_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[STYLE])
+        expected_asset_script_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[SCRIPT])
+        
+        actual_full_path = download(
+            page_url=RESOURCE_URLS[HTML],
+            output_path=tempdir,
+        )
 
-            assert expected_html_file_full_path == actual_full_path
-            assert expected_html_processed == read(actual_full_path, 'rb')
-            assert expected_asset_image == read(expected_asset_image_full_path, 'rb')
-            assert expected_asset_style == read(expected_asset_style_full_path, 'rb')
-            assert expected_asset_script == read(expected_asset_script_full_path, 'rb')
+        assert expected_html_file_full_path == actual_full_path
+        assert expected_html_processed == read(actual_full_path, 'rb')
+        assert expected_asset_image == read(expected_asset_image_full_path, 'rb')
+        assert expected_asset_style == read(expected_asset_style_full_path, 'rb')
+        assert expected_asset_script == read(expected_asset_script_full_path, 'rb')
 
 
 def test_output_directory_exists():
@@ -83,36 +88,35 @@ def test_output_directory_exists():
         assert "Output directory not found: {0}".format(not_existing_dir) in str(exc_info.value)
 
 
-def test_cant_create_assets_directory(expected_html_downloaded):
+def test_cant_create_assets_directory(tempdir, expected_html_downloaded):
     with requests_mock.Mocker() as m:
         m.get(
             url=RESOURCE_URLS[HTML],
             content=expected_html_downloaded,
         )
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            assets_directory_full_path = os.path.join(
-                tmpdirname,
-                EXPECTED_NAMES[ASSETS_DIRECTORY],
+        assets_directory_full_path = os.path.join(
+            tempdir,
+            EXPECTED_NAMES[ASSETS_DIRECTORY],
+        )
+        os.mkdir(assets_directory_full_path)
+        with pytest.raises(FileExistsError) as exc_info:
+            download(
+                page_url=RESOURCE_URLS[HTML],
+                output_path=tempdir,
             )
-            os.mkdir(assets_directory_full_path)
-            with pytest.raises(FileExistsError) as exc_info:
-                download(
-                    page_url=RESOURCE_URLS[HTML],
-                    output_path=tmpdirname,
-                )
-                assert "Can't create assets directory {0}".format(assets_directory_full_path)
+            assert "Can't create assets directory {0}".format(assets_directory_full_path)
 
 
-def test_cant_download_page():
+def test_cant_download_page(tempdir):
     with requests_mock.Mocker() as m:
         m.get(
             url=RESOURCE_URLS[HTML],
             status_code=404,
         )
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            with pytest.raises(RequestException) as exc_info:
-                download(
-                    page_url=RESOURCE_URLS[HTML],
-                    output_path=tmpdirname,
-                )
-                assert "Can't download resource at URL: {0}".format(RESOURCE_URLS[HTML])
+
+        with pytest.raises(RequestException) as exc_info:
+            download(
+                page_url=RESOURCE_URLS[HTML],
+                output_path=tempdir,
+            )
+            assert "Can't download resource at URL: {0}".format(RESOURCE_URLS[HTML])
