@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from tests.helpers.utils import (
+from tests.fixture_files_extra_functions.fixture_file_read import (
     get_fixture_path,
     read,
 )

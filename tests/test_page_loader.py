@@ -6,7 +6,7 @@ import requests_mock
 import tempfile
 
 from page_loader.page_loader import download
-from tests.helpers.utils import read
+from tests.fixture_files_extra_functions.fixture_file_read import read
 
 HTML = 'html'
 IMG = 'img'
