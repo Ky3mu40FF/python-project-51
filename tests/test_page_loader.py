@@ -64,7 +64,7 @@ def test_download(
     expected_asset_image_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[IMG])
     expected_asset_style_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[STYLE])
     expected_asset_script_full_path = os.path.join(expected_assets_directory_full_path, EXPECTED_NAMES[SCRIPT])
-    
+
     actual_full_path = download(
         page_url=RESOURCE_URLS[HTML],
         output_path=tempdir,
