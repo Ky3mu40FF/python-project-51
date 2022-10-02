@@ -37,10 +37,10 @@ def main():
             args.output,
         )
     except requests.exceptions.RequestException as req_exc:
-        print('Error occured while downloading. {0}'.format(req_exc))
+        print('Error occured while downloading.\n{0}'.format(req_exc))
         sys.exit(1)
     except OSError as os_exc:
-        print('Error occured while saving to file. {0}\n{1}'.format(os_exc.strerror, os_exc.filename))
+        print('Error occured while saving.\n{0}'.format(os_exc))
         sys.exit(1)
     except Exception as exc:
         print('Unexpected error occured. {0}'.format(exc))
