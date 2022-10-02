@@ -2,7 +2,6 @@
 import os
 import pytest
 from requests import RequestException
-import requests_mock
 import tempfile
 
 from page_loader.page_loader import download
@@ -102,7 +101,7 @@ def test_cant_create_assets_directory(
         EXPECTED_NAMES[ASSETS_DIRECTORY],
     )
     os.mkdir(assets_directory_full_path)
-    with pytest.raises(FileExistsError) as exc_info:
+    with pytest.raises(FileExistsError):
         download(
             page_url=RESOURCE_URLS[HTML],
             output_path=tempdir,
@@ -115,7 +114,7 @@ def test_resource_not_found(tempdir, requests_mock):
         url=RESOURCE_URLS[HTML],
         status_code=404,
     )
-    with pytest.raises(RequestException) as exc_info:
+    with pytest.raises(RequestException):
         download(
             page_url=RESOURCE_URLS[HTML],
             output_path=tempdir,
@@ -128,7 +127,7 @@ def test_request_timeout(tempdir, requests_mock):
         url=RESOURCE_URLS[HTML],
         status_code=408,
     )
-    with pytest.raises(RequestException) as exc_info:
+    with pytest.raises(RequestException):
         download(
             page_url=RESOURCE_URLS[HTML],
             output_path=tempdir,
@@ -141,7 +140,7 @@ def test_internal_server_error(tempdir, requests_mock):
         url=RESOURCE_URLS[HTML],
         status_code=500,
     )
-    with pytest.raises(RequestException) as exc_info:
+    with pytest.raises(RequestException):
         download(
             page_url=RESOURCE_URLS[HTML],
             output_path=tempdir,

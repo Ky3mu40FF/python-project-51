@@ -1,4 +1,3 @@
-import os
 import pytest
 
 from tests.fixture_files_extra_functions.fixture_file_read import (
