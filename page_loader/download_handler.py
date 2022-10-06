@@ -43,7 +43,11 @@ def download_assets(output_path: str, assets: list) -> None:
     with Bar('Downloading assets', max=len(assets)) as assets_download_bar:
         for asset in assets:
             logger.debug('Downloading resource {0}'.format(asset.asset_url))
-            asset_content = fetch_resource(asset.asset_url)
+            try:
+                asset_content = fetch_resource(asset.asset_url)
+            except requests.exceptions.RequestException:
+                logger.info("Skipping asset {0}".format(asset.asset_url))
+                continue
             save_to_file(
                 content_to_save=asset_content,
                 output_path=output_path,
