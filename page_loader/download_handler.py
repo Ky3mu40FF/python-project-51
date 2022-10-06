@@ -46,7 +46,7 @@ def download_assets(output_path: str, assets: list) -> None:
             try:
                 asset_content = fetch_resource(asset.asset_url)
             except requests.exceptions.RequestException:
-                logger.info("Skipping asset {0}".format(asset.asset_url))
+                logger.info('Skipping asset {0}'.format(asset.asset_url))
                 continue
             save_to_file(
                 content_to_save=asset_content,
